@@ -1,0 +1,13 @@
+{
+	"ImportPath": "github.com/bittersweet/push_notifier",
+	"GoVersion": "go1.4",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Rev": "ae37dedcaae6fce497569786a8694aa3daa97abf"
+		}
+	]
+}
