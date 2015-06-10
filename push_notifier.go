@@ -51,7 +51,7 @@ func handleReceive(w http.ResponseWriter, r *http.Request) {
 
 	message := res.formatMessage()
 	fmt.Println("Sending message: ", message)
-	files := res.getModifiedFiles()
+	files := res.getAddedFiles()
 	if len(files) > 0 {
 		gF := res.getFileContents(files[0])
 		fileBody := gF.decodedContent()

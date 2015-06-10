@@ -22,10 +22,10 @@ type Author struct {
 }
 
 type Commit struct {
-	Id       string
-	Author   Author
-	Message  string
-	Modified []string
+	Id      string
+	Author  Author
+	Message string
+	Added   []string
 }
 
 type Repository struct {
@@ -58,14 +58,14 @@ func (r *Response) formatMessage() string {
 	return result
 }
 
-func (r *Response) getModifiedFiles() []string {
+func (r *Response) getAddedFiles() []string {
 	if len(r.Commits) == 0 {
 		return []string{}
 	}
 
 	mF := make([]string, 0)
 	for _, commit := range r.Commits {
-		for _, file := range commit.Modified {
+		for _, file := range commit.Added {
 			mF = append(mF, file)
 		}
 	}

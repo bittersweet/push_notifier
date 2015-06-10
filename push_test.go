@@ -54,14 +54,14 @@ func TestPushFormatMessageWithoutCommits(t *testing.T) {
 	assert.Equal(t, expected, result)
 }
 
-func TestModifiedFiles(t *testing.T) {
+func TestAddedFiles(t *testing.T) {
 	push := pushPayload()
 
 	expectedFiles := []string{"README.md"}
-	modifiedFiles := push.getModifiedFiles()
+	addedFiles := push.getAddedFiles()
 
-	assert.Equal(t, len(modifiedFiles), 1)
-	assert.Equal(t, modifiedFiles, expectedFiles)
+	assert.Equal(t, len(addedFiles), 1)
+	assert.Equal(t, addedFiles, expectedFiles)
 }
 
 func TestDecodedContent(t *testing.T) {
