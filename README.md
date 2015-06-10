@@ -7,9 +7,9 @@ This is a small Go app that listens to incoming
 webhook events from Github. On receiving this it will post a message to Slack
 with a message and the content of the file pushed.
 
-At [Springest](github.com/springest/) we use this to update everyone on new
-files to a repo we use to share scripts and snippets with eachother.
-This encourages inline discussion and sharing!
+At [Springest](https://github.com/springest/) we use this to update everyone on
+new files to a repo we use to share scripts and snippets with eachother. This
+encourages inline discussion and sharing!
 
 ## Requirements
 
