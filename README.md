@@ -25,7 +25,7 @@ This app requires the following environment variables to be present:
 Go to your project on Github and add a webhook. The defaults are fine, so
 `application/json` Content-Type plus the `push` event.
 
-### `HOOK_SECRET`
+##### `HOOK_SECRET`
 
 We only need to set up the URL (will know that later once deployed to Heroku)
 plus a shared secret for Github and our app, to verify that messages can only
@@ -37,18 +37,18 @@ to generate a secret token:
 
 `ruby -rsecurerandom -e 'puts SecureRandom.hex(20)'`
 
-### `GITHUB_TOKEN`
+##### `GITHUB_TOKEN`
 
 A [personal access token](https://github.com/settings/tokens) so we have access
 to the files commited, to display these inline in Slack. Only the `repo` scope
 is needed for this token.
 
-### `SLACK_TOKEN`
+##### `SLACK_TOKEN`
 
 We need a token to be able to use the `postMessage` in Slack, you can set that
 up [here](https://api.slack.com/web).
 
-### `SLACK_CHANNEL`
+##### `SLACK_CHANNEL`
 
 The id of the channel. Go to
 [https://api.slack.com/methods/channels.list/test](https://api.slack.com/methods/channels.list/test)
