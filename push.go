@@ -11,33 +11,33 @@ import (
 	"regexp"
 )
 
-type Response struct {
+type response struct {
 	Ref        string
-	Commits    []Commit
-	Repository Repository
+	Commits    []commit
+	Repository repository
 }
 
-type Author struct {
+type author struct {
 	Name string
 }
 
-type Commit struct {
-	Id      string
-	Author  Author
+type commit struct {
+	ID      string
+	Author  author
 	Message string
 	Added   []string
 }
 
-type Repository struct {
+type repository struct {
 	Name        string
-	ContentsUrl string `json:"contents_url"`
+	ContentsURL string `json:"contents_url"`
 }
 
-type GithubFile struct {
+type githubFile struct {
 	Content string
 }
 
-func (gf *GithubFile) decodedContent() string {
+func (gf *githubFile) decodedContent() string {
 	data, err := base64.StdEncoding.DecodeString(gf.Content)
 	if err != nil {
 		fmt.Println("base64 decoding error: ", err)
@@ -46,7 +46,7 @@ func (gf *GithubFile) decodedContent() string {
 	return string(data)
 }
 
-func (r *Response) formatMessage() string {
+func (r *response) formatMessage() string {
 	// for _, commit := range r.Commits {
 	// }
 	if len(r.Commits) == 0 {
@@ -58,12 +58,12 @@ func (r *Response) formatMessage() string {
 	return result
 }
 
-func (r *Response) getAddedFiles() []string {
+func (r *response) getAddedFiles() []string {
 	if len(r.Commits) == 0 {
 		return []string{}
 	}
 
-	mF := make([]string, 0)
+	var mF []string
 	for _, commit := range r.Commits {
 		for _, file := range commit.Added {
 			mF = append(mF, file)
@@ -73,15 +73,15 @@ func (r *Response) getAddedFiles() []string {
 	return mF
 }
 
-func (r *Response) getFileContents(file string) *GithubFile {
+func (r *response) getFileContents(file string) *githubFile {
 	re := regexp.MustCompile(`\{\+path\}`)
-	fileUrl := r.Repository.ContentsUrl
-	fileUrl = re.ReplaceAllLiteralString(fileUrl, file)
+	fileURL := r.Repository.ContentsURL
+	fileURL = re.ReplaceAllLiteralString(fileURL, file)
 	token := os.Getenv("GITHUB_TOKEN")
-	fileUrl = fmt.Sprintf("%s?access_token=%s", fileUrl, token)
-	fmt.Println("Fetching GithubFile: ", fileUrl)
+	fileURL = fmt.Sprintf("%s?access_token=%s", fileURL, token)
+	fmt.Println("Fetching GithubFile: ", fileURL)
 
-	res, err := http.Get(fileUrl)
+	res, err := http.Get(fileURL)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -92,7 +92,7 @@ func (r *Response) getFileContents(file string) *GithubFile {
 		log.Fatal(err)
 	}
 
-	gF := &GithubFile{}
+	gF := &githubFile{}
 	err = json.Unmarshal(contents, &gF)
 	if err != nil {
 		log.Println("JSON unmarshal failed ", err)

@@ -9,10 +9,10 @@ import (
 	"github.com/bittersweet/push_notifier/Godeps/_workspace/src/github.com/stretchr/testify/assert"
 )
 
-func pushPayload() *Response {
+func pushPayload() *response {
 	file, _ := ioutil.ReadFile("./fixtures/payload.json")
 
-	res := &Response{}
+	res := &response{}
 	err := json.Unmarshal(file, &res)
 	if err != nil {
 		log.Fatal("JSON unmarshal failed ", err)
@@ -21,17 +21,17 @@ func pushPayload() *Response {
 }
 
 func TestPushFormatMessage(t *testing.T) {
-	commit := Commit{
-		Id:      "0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c",
-		Author:  Author{"baxterthehacker"},
+	c := commit{
+		ID:      "0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c",
+		Author:  author{"baxterthehacker"},
 		Message: "Update README.md",
 	}
-	commits := make([]Commit, 0, 1)
-	commits = append(commits, commit)
-	repository := Repository{
+	commits := make([]commit, 0, 1)
+	commits = append(commits, c)
+	repository := repository{
 		Name: "public-repo",
 	}
-	r := &Response{
+	r := &response{
 		Ref:        "abcd",
 		Commits:    commits,
 		Repository: repository,
@@ -43,8 +43,8 @@ func TestPushFormatMessage(t *testing.T) {
 }
 
 func TestPushFormatMessageWithoutCommits(t *testing.T) {
-	commits := make([]Commit, 0, 1)
-	r := &Response{
+	commits := make([]commit, 0, 1)
+	r := &response{
 		Ref:     "abcd",
 		Commits: commits,
 	}
@@ -65,7 +65,7 @@ func TestAddedFiles(t *testing.T) {
 }
 
 func TestDecodedContent(t *testing.T) {
-	gF := &GithubFile{"IyBwdWJsaWMtcmVwbwo=\n"}
+	gF := &githubFile{"IyBwdWJsaWMtcmVwbwo=\n"}
 
 	expected := "# public-repo\n"
 	result := gF.decodedContent()

@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-func ComputeHmac(message []byte, secret string) string {
+func computeHmac(message []byte, secret string) string {
 	key := []byte(secret)
 	h := hmac.New(sha1.New, key)
 	h.Write([]byte(message))
@@ -27,7 +27,7 @@ func handleReceive(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("ReadAll", err)
 	}
 
-	computed := ComputeHmac(body, os.Getenv("HOOK_SECRET"))
+	computed := computeHmac(body, os.Getenv("HOOK_SECRET"))
 	computedWithSha1 := fmt.Sprintf("sha1=%s", computed)
 	signature := r.Header["X-Hub-Signature"][0]
 	fmt.Println("computed: ", computed)
@@ -40,7 +40,7 @@ func handleReceive(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := &Response{}
+	res := &response{}
 	err = json.Unmarshal(body, &res)
 	if err != nil {
 		log.Println("JSON unmarshal failed ", err)

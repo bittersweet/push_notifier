@@ -40,7 +40,7 @@ func TestReceiveWithInCorrectSignature(t *testing.T) {
 
 func TestComputeHmac(t *testing.T) {
 	body := []byte("body")
-	result := ComputeHmac(body, "secret")
+	result := computeHmac(body, "secret")
 
 	expected := "a18991ff7e4513a1c2d2ee51e3a8e99ca891d9cd"
 	assert.Equal(t, expected, result)
