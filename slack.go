@@ -21,9 +21,9 @@ func sendMessage(message string, fileContents string) {
 	})
 	defer res.Body.Close()
 
-	_, err = ioutil.ReadAll(res.Body)
+	slackBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		log.Println("ReadAll ", err)
+		log.Println("Slack ReadAll error: ", err)
 	}
-	// TODO: do something with result
+	log.Println("Slack response: ", string(slackBody))
 }
